@@ -3,7 +3,7 @@
 from typing import List
 import random
 
-possibleCards = [1,2,3,4,5,6,7,8,9,10, "J","Q", "K", "A"]
+possibleCards = [2,3,4,5,6,7,8,9,10, "J","Q", "K", "A"]
 player_cards = []
 dealer_cards = []
 
@@ -65,10 +65,10 @@ def sumOfTheCards(cards:List) -> int:
     Returns:
         int: Returns the sum of the cards
 
-    >>> sumOfTheCards([1,2,3])
-    6
-    >>> sumOfTheCards([1,10,8])
-    19
+    >>> sumOfTheCards([7,2,3])
+    12
+    >>> sumOfTheCards([3,10,8])
+    21
     >>> sumOfTheCards([10,2,"A"])
     13
     >>> sumOfTheCards([8,"A"])
