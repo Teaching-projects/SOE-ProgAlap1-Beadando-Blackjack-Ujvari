@@ -137,6 +137,38 @@ def ifBusted(cards:List) -> bool:
     if sumOfTheCards(cards) > 21: return True
     return False
 
+def ifDrawn(dealer_cards:List,player_cards:List) -> bool:
+    """This checks if the sum of the dealer cards and the sum of the player cards 
+    are equal or not.
+
+    Args:
+        dealer_cards (List): the list of cards which the dealer has
+        player_cards (List): the list of caards which the player has
+
+    Returns:
+        bool: Returns True if the sum of the dealer cards and the player cards are equal,
+        False otherwise.
+    """
+    if sumOfTheCards(dealer_cards) == sumOfTheCards(player_cards):
+        return True
+    return False
+
+def ifSumOfDealerCardsIsLarger(dealer_cards:List,player_cards:List) -> bool:
+    """It decides whether the sum of the dealer cards are larger than the sum of the
+    player cards or not.
+
+    Args:
+        dealer_cards (List): The cards of the dealer
+        player_cards (List): The cards of the player
+
+    Returns:
+        bool: Returns True if the sum of the dealer cards are larger, False otherwise.
+    """
+
+    if sumOfTheCards(dealer_cards) > sumOfTheCards(player_cards):
+        return True
+    return False 
+
 def options() -> None:
     """ This function shows to the player what options she/he has.
     """
@@ -190,48 +222,56 @@ def getPlayerCard(player_cards:List) -> List:
 
 def save(player_cards:List,dealer_cards:List):
     import json
-    file = open("saved.txt", "wt")
-    json.dump(player_cards, file)
-    json.dump(dealer_cards, file)
+    file = open("saved.json", "wt")
+    eredmeny = {"player_card": player_cards, "sumofplayercards": sumOfTheCards(player_cards),
+    "dealer_cards": dealer_cards, "sumofdealercards": sumOfTheCards(dealer_cards)
+    }
+    json.dump(eredmeny, file)
     file.close()
 
-"""
-while True:
 
-    getDealerCard(dealer_cards)
-    print("Dealer has: {}, the sum of his cards is: {}".format(dealer_cards,sumOfTheCards(dealer_cards)))
-    if ifBusted(dealer_cards):
-        print("Dealer has busted, you win.")
-        break
-    if ifBlackJack(dealer_cards):
-        print("Dealer has BlackJack. Dealer won the game! ")
-        break
+
+while True:
 
     options()
     option = getOption()
+
+    if option == 1 or option == 2:
+        getDealerCard(dealer_cards)
+        print("Dealer has: {}, the sum of his cards is: {}".format(dealer_cards,sumOfTheCards(dealer_cards)))
+        if ifBusted(dealer_cards):
+            print("Dealer has busted, you win.")
+            print("The sum of your cards is: {}".format(sumOfTheCards(player_cards)))
+            break
+        if ifBlackJack(dealer_cards):
+            print("Dealer has BlackJack. Dealer won the game! ")
+            print("The sum of your cards was: {}".format(sumOfTheCards(player_cards)))
+            break
 
     if option == 1:
         getPlayerCard(player_cards)
         print("You have: {}, the sum of your cards is: {}".format(player_cards,sumOfTheCards(player_cards)))
         if ifBusted(player_cards):
-            print("You have busted. Dealer won the game. ")
+            print("You have busted. Dealer won the game. The sum of the dealer cards is: {}".format(sumOfTheCards(dealer_cards)))
             break
         if ifBlackJack(player_cards):
             print("You have BlackJack. You won the game! ")
+            print("The sum of the dealer cards was: {}".format(sumOfTheCards(dealer_cards)))
             break
+
     if option == 2:
-        if sumOfTheCards(dealer_cards) > sumOfTheCards(player_cards):
+        if ifSumOfDealerCardsIsLarger(dealer_cards,player_cards):
             print("Dealer won this game. The sum of his cards is: {}, yours is: {}".format(sumOfTheCards(dealer_cards),sumOfTheCards(player_cards)))
             break
-        elif sumOfTheCards(dealer_cards) == sumOfTheCards(player_cards):
+        elif ifDrawn(dealer_cards,player_cards):
             print("Drawn")
             break
         else:
             print("You won this game. The sum of your cards is: {}, his is: {}".format(sumOfTheCards(player_cards),sumOfTheCards(dealer_cards)))
-            break    
+            break
+
     if option == 3:
         exit()
+
     if option == 4:
         save(player_cards,dealer_cards)
-    else: print("No option like that")
-"""

@@ -165,6 +165,38 @@ def ifBusted(cards:List) -&gt; bool:
     if sumOfTheCards(cards) &gt; 21: return True
     return False
 
+def ifDrawn(dealer_cards:List,player_cards:List) -&gt; bool:
+    &#34;&#34;&#34;This checks if the sum of the dealer cards and the sum of the player cards 
+    are equal or not.
+
+    Args:
+        dealer_cards (List): the list of cards which the dealer has
+        player_cards (List): the list of caards which the player has
+
+    Returns:
+        bool: Returns True if the sum of the dealer cards and the player cards are equal,
+        False otherwise.
+    &#34;&#34;&#34;
+    if sumOfTheCards(dealer_cards) == sumOfTheCards(player_cards):
+        return True
+    return False
+
+def ifSumOfDealerCardsIsLarger(dealer_cards:List,player_cards:List) -&gt; bool:
+    &#34;&#34;&#34;It decides whether the sum of the dealer cards are larger than the sum of the
+    player cards or not.
+
+    Args:
+        dealer_cards (List): The cards of the dealer
+        player_cards (List): The cards of the player
+
+    Returns:
+        bool: Returns True if the sum of the dealer cards are larger, False otherwise.
+    &#34;&#34;&#34;
+
+    if sumOfTheCards(dealer_cards) &gt; sumOfTheCards(player_cards):
+        return True
+    return False 
+
 def options() -&gt; None:
     &#34;&#34;&#34; This function shows to the player what options she/he has.
     &#34;&#34;&#34;
@@ -218,51 +250,59 @@ def getPlayerCard(player_cards:List) -&gt; List:
 
 def save(player_cards:List,dealer_cards:List):
     import json
-    file = open(&#34;saved.txt&#34;, &#34;wt&#34;)
-    json.dump(player_cards, file)
-    json.dump(dealer_cards, file)
+    file = open(&#34;saved.json&#34;, &#34;wt&#34;)
+    eredmeny = {&#34;player_card&#34;: player_cards, &#34;sumofplayercards&#34;: sumOfTheCards(player_cards),
+    &#34;dealer_cards&#34;: dealer_cards, &#34;sumofdealercards&#34;: sumOfTheCards(dealer_cards)
+    }
+    json.dump(eredmeny, file)
     file.close()
 
-&#34;&#34;&#34;
-while True:
 
-    getDealerCard(dealer_cards)
-    print(&#34;Dealer has: {}, the sum of his cards is: {}&#34;.format(dealer_cards,sumOfTheCards(dealer_cards)))
-    if ifBusted(dealer_cards):
-        print(&#34;Dealer has busted, you win.&#34;)
-        break
-    if ifBlackJack(dealer_cards):
-        print(&#34;Dealer has BlackJack. Dealer won the game! &#34;)
-        break
+
+while True:
 
     options()
     option = getOption()
+
+    if option == 1 or option == 2:
+        getDealerCard(dealer_cards)
+        print(&#34;Dealer has: {}, the sum of his cards is: {}&#34;.format(dealer_cards,sumOfTheCards(dealer_cards)))
+        if ifBusted(dealer_cards):
+            print(&#34;Dealer has busted, you win.&#34;)
+            print(&#34;The sum of your cards is: {}&#34;.format(sumOfTheCards(player_cards)))
+            break
+        if ifBlackJack(dealer_cards):
+            print(&#34;Dealer has BlackJack. Dealer won the game! &#34;)
+            print(&#34;The sum of your cards was: {}&#34;.format(sumOfTheCards(player_cards)))
+            break
 
     if option == 1:
         getPlayerCard(player_cards)
         print(&#34;You have: {}, the sum of your cards is: {}&#34;.format(player_cards,sumOfTheCards(player_cards)))
         if ifBusted(player_cards):
-            print(&#34;You have busted. Dealer won the game. &#34;)
+            print(&#34;You have busted. Dealer won the game. The sum of the dealer cards is: {}&#34;.format(sumOfTheCards(dealer_cards)))
             break
         if ifBlackJack(player_cards):
             print(&#34;You have BlackJack. You won the game! &#34;)
+            print(&#34;The sum of the dealer cards was: {}&#34;.format(sumOfTheCards(dealer_cards)))
             break
+
     if option == 2:
-        if sumOfTheCards(dealer_cards) &gt; sumOfTheCards(player_cards):
+        if ifSumOfDealerCardsIsLarger(dealer_cards,player_cards):
             print(&#34;Dealer won this game. The sum of his cards is: {}, yours is: {}&#34;.format(sumOfTheCards(dealer_cards),sumOfTheCards(player_cards)))
             break
-        elif sumOfTheCards(dealer_cards) == sumOfTheCards(player_cards):
+        elif ifDrawn(dealer_cards,player_cards):
             print(&#34;Drawn&#34;)
             break
         else:
             print(&#34;You won this game. The sum of your cards is: {}, his is: {}&#34;.format(sumOfTheCards(player_cards),sumOfTheCards(dealer_cards)))
-            break    
+            break
+
     if option == 3:
         exit()
+
     if option == 4:
-        save(player_cards,dealer_cards)
-    else: print(&#34;No option like that&#34;)
-&#34;&#34;&#34;</code></pre>
+        save(player_cards,dealer_cards)</code></pre>
 </details>
 </section>
 <section>
@@ -581,6 +621,85 @@ True
     else: return False</code></pre>
 </details>
 </dd>
+<dt id="blackjack.ifDrawn"><code class="name flex">
+<span>def <span class="ident">ifDrawn</span></span>(<span>dealer_cards: List, player_cards: List) ‑> bool</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This checks if the sum of the dealer cards and the sum of the player cards
+are equal or not.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>dealer_cards</code></strong> :&ensp;<code>List</code></dt>
+<dd>the list of cards which the dealer has</dd>
+<dt><strong><code>player_cards</code></strong> :&ensp;<code>List</code></dt>
+<dd>the list of caards which the player has</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>bool</code></dt>
+<dd>Returns True if the sum of the dealer cards and the player cards are equal,</dd>
+</dl>
+<p>False otherwise.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def ifDrawn(dealer_cards:List,player_cards:List) -&gt; bool:
+    &#34;&#34;&#34;This checks if the sum of the dealer cards and the sum of the player cards 
+    are equal or not.
+
+    Args:
+        dealer_cards (List): the list of cards which the dealer has
+        player_cards (List): the list of caards which the player has
+
+    Returns:
+        bool: Returns True if the sum of the dealer cards and the player cards are equal,
+        False otherwise.
+    &#34;&#34;&#34;
+    if sumOfTheCards(dealer_cards) == sumOfTheCards(player_cards):
+        return True
+    return False</code></pre>
+</details>
+</dd>
+<dt id="blackjack.ifSumOfDealerCardsIsLarger"><code class="name flex">
+<span>def <span class="ident">ifSumOfDealerCardsIsLarger</span></span>(<span>dealer_cards: List, player_cards: List) ‑> bool</span>
+</code></dt>
+<dd>
+<div class="desc"><p>It decides whether the sum of the dealer cards are larger than the sum of the
+player cards or not.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>dealer_cards</code></strong> :&ensp;<code>List</code></dt>
+<dd>The cards of the dealer</dd>
+<dt><strong><code>player_cards</code></strong> :&ensp;<code>List</code></dt>
+<dd>The cards of the player</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>bool</code></dt>
+<dd>Returns True if the sum of the dealer cards are larger, False otherwise.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def ifSumOfDealerCardsIsLarger(dealer_cards:List,player_cards:List) -&gt; bool:
+    &#34;&#34;&#34;It decides whether the sum of the dealer cards are larger than the sum of the
+    player cards or not.
+
+    Args:
+        dealer_cards (List): The cards of the dealer
+        player_cards (List): The cards of the player
+
+    Returns:
+        bool: Returns True if the sum of the dealer cards are larger, False otherwise.
+    &#34;&#34;&#34;
+
+    if sumOfTheCards(dealer_cards) &gt; sumOfTheCards(player_cards):
+        return True
+    return False </code></pre>
+</details>
+</dd>
 <dt id="blackjack.options"><code class="name flex">
 <span>def <span class="ident">options</span></span>(<span>) ‑> NoneType</span>
 </code></dt>
@@ -611,9 +730,11 @@ True
 </summary>
 <pre><code class="python">def save(player_cards:List,dealer_cards:List):
     import json
-    file = open(&#34;saved.txt&#34;, &#34;wt&#34;)
-    json.dump(player_cards, file)
-    json.dump(dealer_cards, file)
+    file = open(&#34;saved.json&#34;, &#34;wt&#34;)
+    eredmeny = {&#34;player_card&#34;: player_cards, &#34;sumofplayercards&#34;: sumOfTheCards(player_cards),
+    &#34;dealer_cards&#34;: dealer_cards, &#34;sumofdealercards&#34;: sumOfTheCards(dealer_cards)
+    }
+    json.dump(eredmeny, file)
     file.close()</code></pre>
 </details>
 </dd>
@@ -696,7 +817,7 @@ the value of the card A is 1 or 11. If the sum of the cards + 11 &lt;= 21 than i
 </div>
 <ul id="index">
 <li><h3><a href="#header-functions">Functions</a></h3>
-<ul class="two-column">
+<ul class="">
 <li><code><a title="blackjack.getDealerCard" href="#blackjack.getDealerCard">getDealerCard</a></code></li>
 <li><code><a title="blackjack.getOption" href="#blackjack.getOption">getOption</a></code></li>
 <li><code><a title="blackjack.getPlayerCard" href="#blackjack.getPlayerCard">getPlayerCard</a></code></li>
@@ -704,6 +825,8 @@ the value of the card A is 1 or 11. If the sum of the cards + 11 &lt;= 21 than i
 <li><code><a title="blackjack.ifBusted" href="#blackjack.ifBusted">ifBusted</a></code></li>
 <li><code><a title="blackjack.ifCardIsA" href="#blackjack.ifCardIsA">ifCardIsA</a></code></li>
 <li><code><a title="blackjack.ifCardIsJQK" href="#blackjack.ifCardIsJQK">ifCardIsJQK</a></code></li>
+<li><code><a title="blackjack.ifDrawn" href="#blackjack.ifDrawn">ifDrawn</a></code></li>
+<li><code><a title="blackjack.ifSumOfDealerCardsIsLarger" href="#blackjack.ifSumOfDealerCardsIsLarger">ifSumOfDealerCardsIsLarger</a></code></li>
 <li><code><a title="blackjack.options" href="#blackjack.options">options</a></code></li>
 <li><code><a title="blackjack.save" href="#blackjack.save">save</a></code></li>
 <li><code><a title="blackjack.sumOfTheCards" href="#blackjack.sumOfTheCards">sumOfTheCards</a></code></li>
