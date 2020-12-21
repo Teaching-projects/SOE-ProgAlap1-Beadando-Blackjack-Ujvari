@@ -221,6 +221,13 @@ def getPlayerCard(player_cards:List) -> List:
 
 
 def save(player_cards:List,dealer_cards:List):
+    """This function saves the list of player's cards and the sum of them, and also saves
+    the dealer's cards and the sum of them to a json file.
+
+    Args:
+        player_cards (List): the list of the player's cards
+        dealer_cards (List): the list of the dealer's cards
+    """
     import json
     file = open("saved.json", "wt")
     eredmeny = {"player_card": player_cards, "sumofplayercards": sumOfTheCards(player_cards),
@@ -231,47 +238,56 @@ def save(player_cards:List,dealer_cards:List):
 
 
 
-while True:
+def main(dealer_cards:List,player_cards:List):
+    """This is the main function which help we can play with. 
 
-    options()
-    option = getOption()
+    Args:
+        dealer_cards (List): list of the dealer's cards
+        player_cards (List): list of the player's cards
+    """
+    while True:
 
-    if option == 1 or option == 2:
-        getDealerCard(dealer_cards)
-        print("Dealer has: {}, the sum of his cards is: {}".format(dealer_cards,sumOfTheCards(dealer_cards)))
-        if ifBusted(dealer_cards):
-            print("Dealer has busted, you win.")
-            print("The sum of your cards is: {}".format(sumOfTheCards(player_cards)))
-            break
-        if ifBlackJack(dealer_cards):
-            print("Dealer has BlackJack. Dealer won the game! ")
-            print("The sum of your cards was: {}".format(sumOfTheCards(player_cards)))
-            break
+        options()
+        option = getOption()
 
-    if option == 1:
-        getPlayerCard(player_cards)
-        print("You have: {}, the sum of your cards is: {}".format(player_cards,sumOfTheCards(player_cards)))
-        if ifBusted(player_cards):
-            print("You have busted. Dealer won the game. The sum of the dealer cards is: {}".format(sumOfTheCards(dealer_cards)))
-            break
-        if ifBlackJack(player_cards):
-            print("You have BlackJack. You won the game! ")
-            print("The sum of the dealer cards was: {}".format(sumOfTheCards(dealer_cards)))
-            break
+        if option == 1 or option == 2:
+            getDealerCard(dealer_cards)
+            print("Dealer has: {}, the sum of his cards is: {}".format(dealer_cards,sumOfTheCards(dealer_cards)))
+            if ifBusted(dealer_cards):
+                print("Dealer has busted, you win.")
+                print("The sum of your cards is: {}".format(sumOfTheCards(player_cards)))
+                return
+            if ifBlackJack(dealer_cards):
+                print("Dealer has BlackJack. Dealer won the game! ")
+                print("The sum of your cards was: {}".format(sumOfTheCards(player_cards)))
+                return
 
-    if option == 2:
-        if ifSumOfDealerCardsIsLarger(dealer_cards,player_cards):
-            print("Dealer won this game. The sum of his cards is: {}, yours is: {}".format(sumOfTheCards(dealer_cards),sumOfTheCards(player_cards)))
-            break
-        elif ifDrawn(dealer_cards,player_cards):
-            print("Drawn")
-            break
-        else:
-            print("You won this game. The sum of your cards is: {}, his is: {}".format(sumOfTheCards(player_cards),sumOfTheCards(dealer_cards)))
-            break
+        if option == 1:
+            getPlayerCard(player_cards)
+            print("You have: {}, the sum of your cards is: {}".format(player_cards,sumOfTheCards(player_cards)))
+            if ifBusted(player_cards):
+                print("You have busted. Dealer won the game. The sum of the dealer cards is: {}".format(sumOfTheCards(dealer_cards)))
+                return
+            if ifBlackJack(player_cards):
+                print("You have BlackJack. You won the game! ")
+                print("The sum of the dealer cards was: {}".format(sumOfTheCards(dealer_cards)))
+                return
 
-    if option == 3:
-        exit()
+        if option == 2:
+            if ifSumOfDealerCardsIsLarger(dealer_cards,player_cards):
+                print("Dealer won this game. The sum of his cards is: {}, yours is: {}".format(sumOfTheCards(dealer_cards),sumOfTheCards(player_cards)))
+                return
+            elif ifDrawn(dealer_cards,player_cards):
+                print("Drawn")
+                return
+            else:
+                print("You won this game. The sum of your cards is: {}, his is: {}".format(sumOfTheCards(player_cards),sumOfTheCards(dealer_cards)))
+                return
 
-    if option == 4:
-        save(player_cards,dealer_cards)
+        if option == 3:
+            exit()
+
+        if option == 4:
+            save(player_cards,dealer_cards)
+
+        if str(option) not in "1234": print("Sorry, but there is no {}.option".format(option))

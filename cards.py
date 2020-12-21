@@ -1,11 +1,9 @@
-# Blackjack or 21 game
-
 import random
+import option as OP
 
-possibleCards = [1,2,3,4,5,6,7,8,9,10, "J","Q", "K", "A"]
+possibleCards = [2,3,4,5,6,7,8,9,10, "J","Q", "K", "A"]
 player_cards = []
 dealer_cards = []
-
 
 def ifCardIsJQK(card):
     if card == "J" or card == "Q" or card == "K":
@@ -44,17 +42,6 @@ def ifDrawn(dealer_cards,player_cards):
         return True
     return False
 
-def options():
-
-    print("Press 1: Hit")
-    print("Press 2: Stay")
-    print("Press 3: Exit")
-    print("Press 4: Save")
-
-def getOption():
-    option = int(input("What would you like to do? "))
-    return option
-
 def getDealerCard(dealer_cards):
     if sumOfTheCards(dealer_cards) < 17 and not ifBusted(dealer_cards): # Soft17
         card = random.choice(possibleCards)
@@ -79,14 +66,13 @@ def save(player_cards,dealer_cards):
 def ifSumOfDealerCardsIsLarger(dealer_cards,player_cards):
     if sumOfTheCards(dealer_cards) > sumOfTheCards(player_cards):
         return True
-    return False 
-
+    return False
 
 def main(dealer_cards,player_cards):
     while True:
 
-        options()
-        option = getOption()
+        OP.options()
+        option = OP.getOption()
 
         if option == 1 or option == 2:
             getDealerCard(dealer_cards)
@@ -129,4 +115,3 @@ def main(dealer_cards,player_cards):
             save(player_cards,dealer_cards)
 
         if str(option) not in "1234": print("Sorry, but there is no {}.option".format(option))
-
