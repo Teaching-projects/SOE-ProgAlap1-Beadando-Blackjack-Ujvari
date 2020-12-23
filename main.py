@@ -1,3 +1,3 @@
-import cards as CARDS
+import blackjack_ui as bj
 
-CARDS.main()
+bj.main()

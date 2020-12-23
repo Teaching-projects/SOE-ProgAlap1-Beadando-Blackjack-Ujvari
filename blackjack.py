@@ -4,8 +4,6 @@ from typing import List
 import random
 
 possibleCards = [2,3,4,5,6,7,8,9,10, "J","Q", "K", "A"]
-player_cards = []
-dealer_cards = []
 
 
 def ifCardIsJQK(card) -> bool:
@@ -233,13 +231,16 @@ def save(player_cards:List,dealer_cards:List):
 
 
 
-def main(dealer_cards:List,player_cards:List):
+def main():
     """This is the main function which help we can play with. 
 
     Args:
         dealer_cards (List): list of the dealer's cards
         player_cards (List): list of the player's cards
     """
+    player_cards = []
+    dealer_cards = []
+
     while True:
 
         options()
