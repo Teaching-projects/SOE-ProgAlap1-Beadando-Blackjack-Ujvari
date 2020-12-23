@@ -2,8 +2,6 @@ import random
 import option as OP
 
 possibleCards = [2,3,4,5,6,7,8,9,10, "J","Q", "K", "A"]
-player_cards = []
-dealer_cards = []
 
 def ifCardIsJQK(card):
     if card == "J" or card == "Q" or card == "K":
@@ -68,7 +66,10 @@ def ifSumOfDealerCardsIsLarger(dealer_cards,player_cards):
         return True
     return False
 
-def main(dealer_cards,player_cards):
+def main():
+    player_cards = []
+    dealer_cards = []
+    
     while True:
 
         OP.options()
@@ -114,4 +115,4 @@ def main(dealer_cards,player_cards):
         if option == 4:
             save(player_cards,dealer_cards)
 
-        if str(option) not in "1234": print("Sorry, but there is no {}.option".format(option))
+        # if str(option) not in "1234": print("Sorry, but there is no {}.option".format(option))
