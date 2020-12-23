@@ -4,14 +4,10 @@ import option as OP
 possibleCards = [2,3,4,5,6,7,8,9,10, "J","Q", "K", "A"]
 
 def ifCardIsJQK(card):
-    if card == "J" or card == "Q" or card == "K":
-        return True
-    return False
+    return card == "J" or card == "Q" or card == "K"
 
 def ifCardIsA(card):
-    if card == "A":
-        return True
-    return False 
+    return card == "A"
 
 def sumOfTheCards(cards):
     sum = 0
@@ -26,19 +22,13 @@ def sumOfTheCards(cards):
     return sum
 
 def ifBlackJack(cards):
-    if sumOfTheCards(cards) == 21:
-        return True
-    return False
+    return sumOfTheCards(cards) == 21
 
 def ifBusted(cards):
-    if sumOfTheCards(cards) > 21: 
-        return True
-    return False
+    return sumOfTheCards(cards) > 21
 
 def ifDrawn(dealer_cards,player_cards):
-    if sumOfTheCards(dealer_cards) == sumOfTheCards(player_cards):
-        return True
-    return False
+    return sumOfTheCards(dealer_cards) == sumOfTheCards(player_cards)
 
 def getDealerCard(dealer_cards):
     if sumOfTheCards(dealer_cards) < 17 and not ifBusted(dealer_cards): # Soft17
@@ -62,9 +52,8 @@ def save(player_cards,dealer_cards):
     file.close()
 
 def ifSumOfDealerCardsIsLarger(dealer_cards,player_cards):
-    if sumOfTheCards(dealer_cards) > sumOfTheCards(player_cards):
-        return True
-    return False
+    return sumOfTheCards(dealer_cards) > sumOfTheCards(player_cards)
+
 
 def main():
     player_cards = []

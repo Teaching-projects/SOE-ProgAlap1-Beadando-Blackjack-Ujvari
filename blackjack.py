@@ -27,9 +27,7 @@ def ifCardIsJQK(card) -> bool:
     True
     """
 
-    if card == "J" or card == "Q" or card == "K":
-        return True
-    else: return False
+    return card == "J" or card == "Q" or card == "K"
 
 def ifCardIsA(card) -> bool:
     """ If the card we get is A, then it returns True, False otherwise.
@@ -48,9 +46,7 @@ def ifCardIsA(card) -> bool:
     False
     """
 
-    if card == "A":
-        return True
-    return False 
+    return card == "A"
 
 
 
@@ -113,9 +109,7 @@ def ifBlackJack(cards:List) -> bool:
     False
     """
 
-    if sumOfTheCards(cards) == 21:
-        return True
-    return False
+    return sumOfTheCards(cards) == 21
 
 def ifBusted(cards:List) -> bool:
     """If the values of our cards are more than 21, it means that we are busted,
@@ -138,8 +132,7 @@ def ifBusted(cards:List) -> bool:
     False
     """
 
-    if sumOfTheCards(cards) > 21: return True
-    return False
+    return sumOfTheCards(cards) > 21
 
 def ifDrawn(dealer_cards:List,player_cards:List) -> bool:
     """This checks if the sum of the dealer cards and the sum of the player cards 
@@ -153,9 +146,7 @@ def ifDrawn(dealer_cards:List,player_cards:List) -> bool:
         bool: Returns True if the sum of the dealer cards and the player cards are equal,
         False otherwise.
     """
-    if sumOfTheCards(dealer_cards) == sumOfTheCards(player_cards):
-        return True
-    return False
+    return sumOfTheCards(dealer_cards) == sumOfTheCards(player_cards)
 
 def ifSumOfDealerCardsIsLarger(dealer_cards:List,player_cards:List) -> bool:
     """It decides whether the sum of the dealer cards are larger than the sum of the
@@ -169,18 +160,16 @@ def ifSumOfDealerCardsIsLarger(dealer_cards:List,player_cards:List) -> bool:
         bool: Returns True if the sum of the dealer cards are larger, False otherwise.
     """
 
-    if sumOfTheCards(dealer_cards) > sumOfTheCards(player_cards):
-        return True
-    return False 
+    return sumOfTheCards(dealer_cards) > sumOfTheCards(player_cards)
 
 def options() -> None:
     """ This function shows to the player what options she/he has.
     """
-
-    print("Press 1: Hit")
-    print("Press 2: Stay")
-    print("Press 3: Exit")
-    print("Press 4: Save")
+    print("Options: ")
+    print("1: Hit")
+    print("2: Stay")
+    print("3: Exit")
+    print("4: Save")
 
 def getOption() -> int:
     """Ask the player which option he wants to choose.
@@ -188,8 +177,10 @@ def getOption() -> int:
     Returns:
         int: returns an int as an option
     """
-    
-    option = int(input("What would you like to do? "))
+    option = int(input("Please, choose an option! "))
+    while str(option) not in "1234": 
+        print("Sorry, but there is no {}.option".format(option))
+        option = int(input("Please, choose an option! "))
     return option
 
 def getDealerCard(dealer_cards:List) -> List:
@@ -293,5 +284,3 @@ def main(dealer_cards:List,player_cards:List):
 
         if option == 4:
             save(player_cards,dealer_cards)
-
-        if str(option) not in "1234": print("Sorry, but there is no {}.option".format(option))
