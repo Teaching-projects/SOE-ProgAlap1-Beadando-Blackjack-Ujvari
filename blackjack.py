@@ -75,6 +75,10 @@ def sumOfTheCards(cards:List) -> int:
     19
     >>> sumOfTheCards(["Q","K"])
     20
+    >>> sumOfTheCards([3,10,'A'])
+    14
+    >>> sumOfTheCards([3,'A',10])
+    24
     """
 
     sum = 0
