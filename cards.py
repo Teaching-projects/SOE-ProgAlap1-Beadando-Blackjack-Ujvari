@@ -9,15 +9,21 @@ def ifCardIsA(card):
     return card == "A"
 
 def sumOfTheCards(cards):
+    count_A = 0
     sum = 0
     for card in cards:
         if ifCardIsJQK(card):
             sum += 10
         elif ifCardIsA(card):
+            count_A += 1
+        else: sum += card
+
+    if count_A != 0:
+        for i in range(count_A):
             if sum + 11 <= 21:
                 sum += 11
             else: sum += 1
-        else: sum += card
+
     return sum
 
 def ifBlackJack(cards):

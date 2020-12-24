@@ -72,18 +72,27 @@ def sumOfTheCards(cards:List) -> int:
     >>> sumOfTheCards([3,10,'A'])
     14
     >>> sumOfTheCards([3,'A',10])
-    24
+    14
+    >>> sumOfTheCards(['A',6,'A'])
+    18
+    >>> sumOfTheCards(['A',6,'A',10])
+    18
     """
-
+    count_A = 0
     sum = 0
     for card in cards:
         if ifCardIsJQK(card):
             sum += 10
         elif ifCardIsA(card):
+            count_A += 1
+        else: sum += card
+
+    if count_A != 0:
+        for i in range(count_A):
             if sum + 11 <= 21:
                 sum += 11
             else: sum += 1
-        else: sum += card
+
     return sum
 
 def ifBlackJack(cards:List) -> bool:
