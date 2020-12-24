@@ -32,8 +32,6 @@ from typing import List
 import random
 
 possibleCards = [2,3,4,5,6,7,8,9,10, &#34;J&#34;,&#34;Q&#34;, &#34;K&#34;, &#34;A&#34;]
-player_cards = []
-dealer_cards = []
 
 
 def ifCardIsJQK(card) -&gt; bool:
@@ -55,9 +53,7 @@ def ifCardIsJQK(card) -&gt; bool:
     True
     &#34;&#34;&#34;
 
-    if card == &#34;J&#34; or card == &#34;Q&#34; or card == &#34;K&#34;:
-        return True
-    else: return False
+    return card == &#34;J&#34; or card == &#34;Q&#34; or card == &#34;K&#34;
 
 def ifCardIsA(card) -&gt; bool:
     &#34;&#34;&#34; If the card we get is A, then it returns True, False otherwise.
@@ -76,9 +72,7 @@ def ifCardIsA(card) -&gt; bool:
     False
     &#34;&#34;&#34;
 
-    if card == &#34;A&#34;:
-        return True
-    return False 
+    return card == &#34;A&#34;
 
 
 
@@ -103,17 +97,30 @@ def sumOfTheCards(cards:List) -&gt; int:
     19
     &gt;&gt;&gt; sumOfTheCards([&#34;Q&#34;,&#34;K&#34;])
     20
+    &gt;&gt;&gt; sumOfTheCards([3,10,&#39;A&#39;])
+    14
+    &gt;&gt;&gt; sumOfTheCards([3,&#39;A&#39;,10])
+    14
+    &gt;&gt;&gt; sumOfTheCards([&#39;A&#39;,6,&#39;A&#39;])
+    18
+    &gt;&gt;&gt; sumOfTheCards([&#39;A&#39;,6,&#39;A&#39;,10])
+    18
     &#34;&#34;&#34;
-
+    count_A = 0
     sum = 0
     for card in cards:
         if ifCardIsJQK(card):
             sum += 10
         elif ifCardIsA(card):
+            count_A += 1
+        else: sum += card
+
+    if count_A != 0:
+        for i in range(count_A):
             if sum + 11 &lt;= 21:
                 sum += 11
             else: sum += 1
-        else: sum += card
+
     return sum
 
 def ifBlackJack(cards:List) -&gt; bool:
@@ -137,9 +144,7 @@ def ifBlackJack(cards:List) -&gt; bool:
     False
     &#34;&#34;&#34;
 
-    if sumOfTheCards(cards) == 21:
-        return True
-    return False
+    return sumOfTheCards(cards) == 21
 
 def ifBusted(cards:List) -&gt; bool:
     &#34;&#34;&#34;If the values of our cards are more than 21, it means that we are busted,
@@ -162,8 +167,7 @@ def ifBusted(cards:List) -&gt; bool:
     False
     &#34;&#34;&#34;
 
-    if sumOfTheCards(cards) &gt; 21: return True
-    return False
+    return sumOfTheCards(cards) &gt; 21
 
 def ifDrawn(dealer_cards:List,player_cards:List) -&gt; bool:
     &#34;&#34;&#34;This checks if the sum of the dealer cards and the sum of the player cards 
@@ -177,9 +181,7 @@ def ifDrawn(dealer_cards:List,player_cards:List) -&gt; bool:
         bool: Returns True if the sum of the dealer cards and the player cards are equal,
         False otherwise.
     &#34;&#34;&#34;
-    if sumOfTheCards(dealer_cards) == sumOfTheCards(player_cards):
-        return True
-    return False
+    return sumOfTheCards(dealer_cards) == sumOfTheCards(player_cards)
 
 def ifSumOfDealerCardsIsLarger(dealer_cards:List,player_cards:List) -&gt; bool:
     &#34;&#34;&#34;It decides whether the sum of the dealer cards are larger than the sum of the
@@ -193,18 +195,15 @@ def ifSumOfDealerCardsIsLarger(dealer_cards:List,player_cards:List) -&gt; bool:
         bool: Returns True if the sum of the dealer cards are larger, False otherwise.
     &#34;&#34;&#34;
 
-    if sumOfTheCards(dealer_cards) &gt; sumOfTheCards(player_cards):
-        return True
-    return False 
+    return sumOfTheCards(dealer_cards) &gt; sumOfTheCards(player_cards)
 
 def options() -&gt; None:
     &#34;&#34;&#34; This function shows to the player what options she/he has.
     &#34;&#34;&#34;
-
-    print(&#34;Press 1: Hit&#34;)
-    print(&#34;Press 2: Stay&#34;)
-    print(&#34;Press 3: Exit&#34;)
-    print(&#34;Press 4: Save&#34;)
+    print(&#34;Options: &#34;)
+    print(&#34;1: Hit&#34;)
+    print(&#34;2: Stay&#34;)
+    print(&#34;3: Current result to a json file and exit&#34;)
 
 def getOption() -&gt; int:
     &#34;&#34;&#34;Ask the player which option he wants to choose.
@@ -212,8 +211,10 @@ def getOption() -&gt; int:
     Returns:
         int: returns an int as an option
     &#34;&#34;&#34;
-    
-    option = int(input(&#34;What would you like to do? &#34;))
+    option = int(input(&#34;Please, choose an option! &#34;))
+    while str(option) not in &#34;123&#34;: 
+        print(&#34;Sorry, but there is no {}.option&#34;.format(option))
+        option = int(input(&#34;Please, choose an option! &#34;))
     return option
 
 def getDealerCard(dealer_cards:List) -&gt; List:
@@ -266,13 +267,16 @@ def save(player_cards:List,dealer_cards:List):
 
 
 
-def main(dealer_cards:List,player_cards:List):
+def main():
     &#34;&#34;&#34;This is the main function which help we can play with. 
 
     Args:
         dealer_cards (List): list of the dealer&#39;s cards
         player_cards (List): list of the player&#39;s cards
     &#34;&#34;&#34;
+    player_cards = []
+    dealer_cards = []
+
     while True:
 
         options()
@@ -313,12 +317,8 @@ def main(dealer_cards:List,player_cards:List):
                 return
 
         if option == 3:
-            exit()
-
-        if option == 4:
             save(player_cards,dealer_cards)
-
-        if str(option) not in &#34;1234&#34;: print(&#34;Sorry, but there is no {}.option&#34;.format(option))</code></pre>
+            exit()</code></pre>
 </details>
 </section>
 <section>
@@ -385,8 +385,10 @@ It is called the Soft 17.</p>
     Returns:
         int: returns an int as an option
     &#34;&#34;&#34;
-    
-    option = int(input(&#34;What would you like to do? &#34;))
+    option = int(input(&#34;Please, choose an option! &#34;))
+    while str(option) not in &#34;123&#34;: 
+        print(&#34;Sorry, but there is no {}.option&#34;.format(option))
+        option = int(input(&#34;Please, choose an option! &#34;))
     return option</code></pre>
 </details>
 </dd>
@@ -476,9 +478,7 @@ False
     False
     &#34;&#34;&#34;
 
-    if sumOfTheCards(cards) == 21:
-        return True
-    return False</code></pre>
+    return sumOfTheCards(cards) == 21</code></pre>
 </details>
 </dd>
 <dt id="blackjack.ifBusted"><code class="name flex">
@@ -533,8 +533,7 @@ False
     False
     &#34;&#34;&#34;
 
-    if sumOfTheCards(cards) &gt; 21: return True
-    return False</code></pre>
+    return sumOfTheCards(cards) &gt; 21</code></pre>
 </details>
 </dd>
 <dt id="blackjack.ifCardIsA"><code class="name flex">
@@ -580,9 +579,7 @@ False
     False
     &#34;&#34;&#34;
 
-    if card == &#34;A&#34;:
-        return True
-    return False </code></pre>
+    return card == &#34;A&#34;</code></pre>
 </details>
 </dd>
 <dt id="blackjack.ifCardIsJQK"><code class="name flex">
@@ -632,9 +629,7 @@ True
     True
     &#34;&#34;&#34;
 
-    if card == &#34;J&#34; or card == &#34;Q&#34; or card == &#34;K&#34;:
-        return True
-    else: return False</code></pre>
+    return card == &#34;J&#34; or card == &#34;Q&#34; or card == &#34;K&#34;</code></pre>
 </details>
 </dd>
 <dt id="blackjack.ifDrawn"><code class="name flex">
@@ -672,9 +667,7 @@ are equal or not.</p>
         bool: Returns True if the sum of the dealer cards and the player cards are equal,
         False otherwise.
     &#34;&#34;&#34;
-    if sumOfTheCards(dealer_cards) == sumOfTheCards(player_cards):
-        return True
-    return False</code></pre>
+    return sumOfTheCards(dealer_cards) == sumOfTheCards(player_cards)</code></pre>
 </details>
 </dd>
 <dt id="blackjack.ifSumOfDealerCardsIsLarger"><code class="name flex">
@@ -711,13 +704,11 @@ player cards or not.</p>
         bool: Returns True if the sum of the dealer cards are larger, False otherwise.
     &#34;&#34;&#34;
 
-    if sumOfTheCards(dealer_cards) &gt; sumOfTheCards(player_cards):
-        return True
-    return False </code></pre>
+    return sumOfTheCards(dealer_cards) &gt; sumOfTheCards(player_cards)</code></pre>
 </details>
 </dd>
 <dt id="blackjack.main"><code class="name flex">
-<span>def <span class="ident">main</span></span>(<span>dealer_cards: List, player_cards: List)</span>
+<span>def <span class="ident">main</span></span>(<span>)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>This is the main function which help we can play with. </p>
@@ -732,13 +723,16 @@ player cards or not.</p>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def main(dealer_cards:List,player_cards:List):
+<pre><code class="python">def main():
     &#34;&#34;&#34;This is the main function which help we can play with. 
 
     Args:
         dealer_cards (List): list of the dealer&#39;s cards
         player_cards (List): list of the player&#39;s cards
     &#34;&#34;&#34;
+    player_cards = []
+    dealer_cards = []
+
     while True:
 
         options()
@@ -779,12 +773,8 @@ player cards or not.</p>
                 return
 
         if option == 3:
-            exit()
-
-        if option == 4:
             save(player_cards,dealer_cards)
-
-        if str(option) not in &#34;1234&#34;: print(&#34;Sorry, but there is no {}.option&#34;.format(option))</code></pre>
+            exit()</code></pre>
 </details>
 </dd>
 <dt id="blackjack.options"><code class="name flex">
@@ -799,11 +789,10 @@ player cards or not.</p>
 <pre><code class="python">def options() -&gt; None:
     &#34;&#34;&#34; This function shows to the player what options she/he has.
     &#34;&#34;&#34;
-
-    print(&#34;Press 1: Hit&#34;)
-    print(&#34;Press 2: Stay&#34;)
-    print(&#34;Press 3: Exit&#34;)
-    print(&#34;Press 4: Save&#34;)</code></pre>
+    print(&#34;Options: &#34;)
+    print(&#34;1: Hit&#34;)
+    print(&#34;2: Stay&#34;)
+    print(&#34;3: Current result to a json file and exit&#34;)</code></pre>
 </details>
 </dd>
 <dt id="blackjack.save"><code class="name flex">
@@ -867,6 +856,14 @@ the value of the card A is 1 or 11. If the sum of the cards + 11 &lt;= 21 than i
 19
 &gt;&gt;&gt; sumOfTheCards([&quot;Q&quot;,&quot;K&quot;])
 20
+&gt;&gt;&gt; sumOfTheCards([3,10,'A'])
+14
+&gt;&gt;&gt; sumOfTheCards([3,'A',10])
+14
+&gt;&gt;&gt; sumOfTheCards(['A',6,'A'])
+18
+&gt;&gt;&gt; sumOfTheCards(['A',6,'A',10])
+18
 </code></pre></div>
 <details class="source">
 <summary>
@@ -893,17 +890,30 @@ the value of the card A is 1 or 11. If the sum of the cards + 11 &lt;= 21 than i
     19
     &gt;&gt;&gt; sumOfTheCards([&#34;Q&#34;,&#34;K&#34;])
     20
+    &gt;&gt;&gt; sumOfTheCards([3,10,&#39;A&#39;])
+    14
+    &gt;&gt;&gt; sumOfTheCards([3,&#39;A&#39;,10])
+    14
+    &gt;&gt;&gt; sumOfTheCards([&#39;A&#39;,6,&#39;A&#39;])
+    18
+    &gt;&gt;&gt; sumOfTheCards([&#39;A&#39;,6,&#39;A&#39;,10])
+    18
     &#34;&#34;&#34;
-
+    count_A = 0
     sum = 0
     for card in cards:
         if ifCardIsJQK(card):
             sum += 10
         elif ifCardIsA(card):
+            count_A += 1
+        else: sum += card
+
+    if count_A != 0:
+        for i in range(count_A):
             if sum + 11 &lt;= 21:
                 sum += 11
             else: sum += 1
-        else: sum += card
+
     return sum</code></pre>
 </details>
 </dd>

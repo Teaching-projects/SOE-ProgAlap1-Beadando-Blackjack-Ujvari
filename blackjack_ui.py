@@ -4,12 +4,11 @@ def options():
     print("Options: ")
     print("1: Hit")
     print("2: Stay")
-    print("3: Exit")
-    print("4: Save")
+    print("3: Current result to a json file and exit")
 
 def getOption():
     option = int(input("Please, choose an option! "))
-    while str(option) not in "1234": 
+    while str(option) not in "123": 
         print("Sorry, but there is no {}.option".format(option))
         option = int(input("Please, choose an option! "))
     return option
@@ -58,7 +57,7 @@ def main():
                 return
 
         if option == 3:
+            CARDS.save(player_cards,dealer_cards)
             exit()
 
-        if option == 4:
-            CARDS.save(player_cards,dealer_cards)
+    
