@@ -20,6 +20,7 @@ Ha úgy gondoljuk, hogy nem akarunk több lapot kapni, nehogy besokalljunk, akko
 ## 3. Current result to a json file and exit
 Ha a hármas gombot választjuk, akkor a jelenlegi befejezetlen játékeredményt ki tudjuk iratni a `saved.json` fájlba, majd egyszerűen ki tudunk lépni a játékból.
 
+## Ha a játéknak vége
 Minden játék végén az eredmény hozzáfűzödik a `blackjack.log` fájlhoz. Ha meg szeretnénk nézni a statisztikát, hányszor nyertünk -ebből hányszor  blackjackkel-, illetve hányszor vesztettünk -ebből hányszor bustedoltunk-, akkor azt a `stat.py` programban tudjuk megnézni.
 
 ## A lapok értékei a Blackjack játékban:
