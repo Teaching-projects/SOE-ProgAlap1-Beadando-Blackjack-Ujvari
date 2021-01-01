@@ -1,0 +1,1 @@
+[{'result': 'lose', 'reason': 'Dealer had BlackJack.'}, {'result': 'lose', 'reason': 'Player has busted.'}, {'result': 'draw', 'reason': 'Both got the same value.'}, {'result': 'win', 'reason': 'Dealer has busted.'}]
