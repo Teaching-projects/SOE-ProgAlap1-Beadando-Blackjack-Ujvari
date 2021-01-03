@@ -1,1 +1,1 @@
-[{"result": "win", "reason": "Dealer has busted."}, {"result": "win", "reason": "Player had BlackJack."}, {"result": "lose", "reason": "Dealer was closer to 21."}]
+[{"result": "win", "reason": "Dealer has busted."}, {"result": "win", "reason": "Player had BlackJack."}, {"result": "lose", "reason": "Dealer was closer to 21."}, {"result": "win", "reason": "Player had BlackJack."}, {"result": "lose", "reason": "Dealer was closer to 21."}, {"result": "win", "reason": "Player was closer to 21."}]

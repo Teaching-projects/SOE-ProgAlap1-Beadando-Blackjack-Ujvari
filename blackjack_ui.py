@@ -2,23 +2,32 @@ import cards as CARDS
 import json
 import os.path
 
-def options():
+def options() -> None:
+    """ This function shows to the player what options she/he has.
+    """
     print()
     print("Options: ")
     print("1: Hit")
     print("2: Stay")
     print("3: Current result to a json file and exit")
     print()
+    
+def getOption() -> int:
+    """Ask the player which option he wants to choose.
 
-def getOption():
+    Returns:
+        int: returns an int as an option
+    """
     option = int(input("Please, choose an option! "))
-    print()
     while str(option) not in "123": 
         print("Sorry, but there is no {}.option".format(option))
         option = int(input("Please, choose an option! "))
     return option
 
 def main():
+    """This is the main function which help we can play with. 
+    """
+
     file_exists = os.path.isfile(r'blackjack.log')
     if not file_exists:
        with open(r'blackjack.log', 'a+') as log:
