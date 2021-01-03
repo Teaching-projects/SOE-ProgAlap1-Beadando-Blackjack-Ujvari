@@ -1,9 +1,11 @@
 import json
 
-with open("blackjack.log", "r") as read_file:
-    logs = read_file.readline()
-    logs = logs.replace("'",'"')
-    logs = json.loads(logs)
+with open(r'blackjack.log', 'r') as log:
+           logs = log.readline()
+           if logs == '':
+              logs = []
+           else:
+              logs = json.loads(logs)
 
 lost = 0
 for i in range(len(logs)):
