@@ -79,6 +79,10 @@ def sumOfTheCards(cards:List) -> int:
     18
     >>> sumOfTheCards([10,'A','A'])
     12
+    >>> sumOfTheCards([9,'A','A','A'])
+    12
+    >>> sumOfTheCards([8,'A','A','A','A'])
+    12
     """
     count_A = 0
     sum = 0
@@ -90,13 +94,12 @@ def sumOfTheCards(cards:List) -> int:
         else: sum += card
 
     if count_A != 0:
-        if sum == 10 and count_A >= 2:
-            sum = sum + count_A * 1
-        else:
-            for i in range(count_A):
-                if sum + 11 <= 21:
-                    sum += 11
-                else: sum += 1
+        sum += count_A * 1
+        
+        for i in range(count_A):
+            if sum + 10 <= 21:
+                sum += 10
+                   
 
     return sum
 
